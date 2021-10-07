@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div>
-      <div>온도</div>
+    <div class="container" v-on:click="moveDetail()">
+      <!-- <div>{{temp.temp}}</div> -->
+      <div class="box">
+      <h1 class="temp">{{$store.state.weather.main.temp}}</h1>
       <div>날씨그림</div>
       <div>위치</div>
       <div>미세먼지</div>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
-import {getWeather} from '../api/index.js'
 export default {
   name: 'Home',
 
@@ -20,10 +22,14 @@ export default {
     };
   },
 
+  computed: {
+    temp(){
+      return this.$store.state.weather.main
+    }
+  },
+
   created() {
-    getWeather()
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
+    this.$store.dispatch('GET_WEATHER')
   },
   
 
@@ -32,11 +38,20 @@ export default {
   },
 
   methods: {
-    
+    moveDetail(){
+      this.$router.push('detail');
+    }
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 
+.container{
+  display: flex;
+}
+
+.box{
+  margin: 0 auto;
+}
 </style>
