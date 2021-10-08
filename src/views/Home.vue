@@ -3,8 +3,10 @@
     <div class="container" v-on:click="moveDetail()">
       <!-- <div>{{temp.temp}}</div> -->
       <div class="box">
-      <h1 class="temp">{{$store.state.weather.main.temp}}</h1>
-      <div>날씨그림</div>
+      <!-- <h1 class="temp">{{$store.state.weather.main}}</h1> -->
+      <h1>{{this.resultdata.temp}}°C</h1>
+      <img src="" alt="">
+      <div>{{this.resultdata.weather}}</div>
       <div>위치</div>
       <div>미세먼지</div>
     </div>
@@ -23,13 +25,17 @@ export default {
   },
 
   computed: {
-    temp(){
-      return this.$store.state.weather.main
+    resultdata(){
+      return this.$store.getters.resultdata;
     }
+    // temp(){
+    //   return this.$store.state.weather.main
+    // }
   },
 
   created() {
     this.$store.dispatch('GET_WEATHER')
+    // console.log(this.$store.state.weather.cod);
   },
   
 

@@ -6,12 +6,17 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        weather: [],
+        info: { weather: [], name: null, min_temp: null, max_temp: null },
     },
 
     mutations: {
-        SET_WEATHER(state, weather) {
-            state.weather = weather;
+        SET_WEATHER(state, payload) {
+            state.info = {
+                name: payload.name,
+                temp: payload.main.temp,
+                min_temp: payload.main.temp_min,
+                weather: payload.weather[0].main,
+            };
         },
     },
     actions: {
@@ -24,6 +29,11 @@ export const store = new Vuex.Store({
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+    },
+    getters: {
+        resultdata: (state) => {
+            return state.info;
         },
     },
 });
